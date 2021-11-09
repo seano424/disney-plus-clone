@@ -33,6 +33,12 @@ function Detail() {
           <img src="/images/group-icon.png" alt="" />
         </GroupWatchButton>
       </Controls>
+      <SubTitle>2018 · 7m · Family, Fantasy, Kids, Animation </SubTitle>
+      <Description>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, dolorem
+        molestiae rerum repudiandae nulla porro. Optio officia voluptates
+        accusantium ad?
+      </Description>
     </Container>
   )
 }
@@ -124,4 +130,17 @@ const AddButton = styled.button`
 
 const GroupWatchButton = styled(AddButton)`
   background-color: rgb(0, 0, 0);
+`
+
+const SubTitle = styled.div`
+  color: rgb(249, 249, 249);
+  font-size: 15px;
+  margin-top: 26px;
+  min-height: 20px;
+`
+
+const Description = styled.div`
+  line-height: 1.4;
+  font-size: 20px;
+  margin-top: 16px;
 `
