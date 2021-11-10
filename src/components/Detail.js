@@ -1,44 +1,74 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useParams } from 'react-router'
+import { db } from '../firebase'
+import { onSnapshot, doc } from '@firebase/firestore'
 
 function Detail() {
+  const { id } = useParams()
+  const [movie, setMovie] = useState()
+
+  useEffect(() => {
+    onSnapshot(doc(db, 'movies', id), (doc) => {
+      if (doc.exists) {
+        setMovie(doc.data())
+      } else {
+        // redirect to home page
+      }
+    })
+  }, [id])
+
+  console.log('movie', movie)
+
   return (
     <Container>
-      <Background>
-        <img
-          src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/9D8AEB7DE234898392BFD20E7D9B112B841E920AF9A3F54CCFB966722AFF3461/scale?width=1920&aspectRatio=1.78&format=jpeg"
-          alt=""
-        />
-      </Background>
+      {movie && (
+        <>
+          <Background>
+            <img
+              src={
+                movie
+                  ? movie.img
+                  : `https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/9D8AEB7DE234898392BFD20E7D9B112B841E920AF9A3F54CCFB966722AFF3461/scale?width=1920&aspectRatio=1.78&format=jpeg`
+              }
+              alt=""
+            />
+          </Background>
 
-      <ImageTitle>
-        <img
-          src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/EF737B93E2F2ABE27C74CBBEB322F18A421E7986129E9989587CEF2295B0447F/scale?width=1344&aspectRatio=1.78&format=png"
-          alt=""
-        />
-      </ImageTitle>
-      <Controls>
-        <PlayButton>
-          <img src="/images/play-icon-black.png" alt="" />
-          <span>Play</span>
-        </PlayButton>
-        <TrailerButton>
-          <img src="/images/play-icon-white.png" alt="" />
-          <span>Trailer</span>
-        </TrailerButton>
-        <AddButton>
-          <span>+</span>
-        </AddButton>
-        <GroupWatchButton>
-          <img src="/images/group-icon.png" alt="" />
-        </GroupWatchButton>
-      </Controls>
-      <SubTitle>2018 · 7m · Family, Fantasy, Kids, Animation </SubTitle>
-      <Description>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, dolorem
-        molestiae rerum repudiandae nulla porro. Optio officia voluptates
-        accusantium ad?
-      </Description>
+          <ImageTitle>
+            <img
+              src={
+                movie
+                  ? movie.imgTitle
+                  : `https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/EF737B93E2F2ABE27C74CBBEB322F18A421E7986129E9989587CEF2295B0447F/scale?width=1344&aspectRatio=1.78&format=png`
+              }
+              alt=""
+            />
+          </ImageTitle>
+          <Controls>
+            <PlayButton>
+              <img src="/images/play-icon-black.png" alt="" />
+              <span>Play</span>
+            </PlayButton>
+            <TrailerButton>
+              <img src="/images/play-icon-white.png" alt="" />
+              <span>Trailer</span>
+            </TrailerButton>
+            <AddButton>
+              <span>+</span>
+            </AddButton>
+            <GroupWatchButton>
+              <img src="/images/group-icon.png" alt="" />
+            </GroupWatchButton>
+          </Controls>
+          <SubTitle>2018 · 7m · Family, Fantasy, Kids, Animation </SubTitle>
+          <Description>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non,
+            dolorem molestiae rerum repudiandae nulla porro. Optio officia
+            voluptates accusantium ad?
+          </Description>
+        </>
+      )}
     </Container>
   )
 }
